@@ -4,7 +4,19 @@ export const LoginSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
-  password: z.string().min(3, {
+  password: z.string().min(6, {
     message: "Password is required",
+  }),
+});
+
+export const RegisterSchema = z.object({
+  name: z.string().min(2, {
+    message: "Name is required"
+  }),
+  email: z.string().email({
+    message: "Email is required",
+  }),
+  password: z.string().min(6, {
+    message: "Minimum 6 characters are required!",
   }),
 });
