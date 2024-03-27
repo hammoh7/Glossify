@@ -1,18 +1,23 @@
-import { auth, signOut } from "@/lib/auth";
+"use client";
 
-const MainPage = async () => {
-  const session = await auth();
+import { logout } from "@/actions/logout";
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@/hooks/current-user";
+
+const MainPage = () => {
+  const user = currentUser();
+  const onClick = () => {
+    logout();
+  };
   return (
-    <div>
-      {JSON.stringify(session)}
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
+    <div className=" p-2 rounded-md ml-auto">
+      <Button
+        className="text-white text-md bg-gradient-to-l from-red-400 to-orange-500 rounded-md shadow-md transform transition-transform hover:translate-y-[-3px]"
+        onClick={onClick}
+        type="submit"
       >
-        <button type="submit">Sign Out</button>
-      </form>
+        Logout
+      </Button>
     </div>
   );
 };
