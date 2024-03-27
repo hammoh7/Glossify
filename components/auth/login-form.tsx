@@ -19,6 +19,7 @@ import { AuthError } from "./auth-error";
 import { AuthSuccess } from "./auth-success";
 import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -40,11 +41,14 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values)
       .then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        // setSuccess(data?.success);
       })
     });
   };
+
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use!" : "";
 
   return (
     <CardWrapper
@@ -94,7 +98,7 @@ export const LoginForm = () => {
             />
           </div>
           <AuthSuccess message={success} />
-          <AuthError message={error} />
+          <AuthError message={error || urlError} />
           <Button disabled={isPending} type="submit" className="w-full">
             Login
           </Button>
