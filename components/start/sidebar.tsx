@@ -4,16 +4,16 @@ import { cn } from "@/lib/utils";
 import { Languages } from "lucide-react";
 import Link from "next/link";
 import { SidebarItems } from "./sidebar-items";
-import { currentUser } from "@/hooks/current-user";
 import { logout } from "@/actions/logout";
 import { Button } from "../ui/button";
+import { getCurrentUser } from "@/hooks/current-user";
 
 type SidebarProps = {
   className?: string;
 };
 
 export const Sidebar = ({ className }: SidebarProps) => {
-  const user = currentUser();
+  const user = getCurrentUser();
   const onClick = () => {
     logout();
   };
@@ -33,14 +33,14 @@ export const Sidebar = ({ className }: SidebarProps) => {
         </div>
       </Link>
       <div className="flex flex-col gap-y-2 flex-1">
-        <SidebarItems label="LEARN" href="/start" iconSrc="/learn.svg" />
+        <SidebarItems label="LEARN" href="/start" iconSrc="/images/learn.jpeg" />
         <SidebarItems
           label="LEADERBOARD"
           href="/leaderboard"
-          iconSrc="/leaderboard.svg"
+          iconSrc="/images/leaderboard.jpeg"
         />
-        <SidebarItems label="QUESTS" href="/quests" iconSrc="/quests.svg" />
-        <SidebarItems label="BUY" href="/buy" iconSrc="/buy.svg" />
+        {/* <SidebarItems label="QUESTS" href="/quests" iconSrc="/images/quests.jpeg" />
+        <SidebarItems label="BUY" href="/buy" iconSrc="/images/buy.jpeg" /> */}
       </div>
       <div className="p-5">
         <Button

@@ -21,7 +21,13 @@ export const SidebarItems = ({ label, iconSrc, href }: SidebarItems) => {
       asChild
     >
       <Link href={href}>
-        <Image src={iconSrc} alt={label} className="mr-5" height="30" width="30" />
+        <Image
+          src={iconSrc}
+          alt={label}
+          className="mr-5"
+          height="35"
+          width="35"
+        />
         {label}
       </Link>
     </Button>
