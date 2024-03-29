@@ -11,7 +11,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <MobileHeader />
       <Sidebar className="hidden lg:flex" />
       <main className="lg:pl-[250px] h-full pt-[50px] lg:pt-0">
-        <div className="h-full bg-gradient-to-t from-violet-300 to-indigo-500">
+        <div className="h-full max-w-[1020px] mx-auto pt-5">
           {children}
         </div>
       </main>
