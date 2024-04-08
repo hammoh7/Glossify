@@ -1,6 +1,15 @@
-import { Languages } from "lucide-react";
+import { Languages, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Home = () => {
   return (
@@ -23,15 +32,34 @@ const Home = () => {
         </div>
       </div>
       <div className="text-sm md:text-md text-zinc-800 mt-5 max-w-sm md:max-w-xl text-center mx-auto">
-        Welcome to Glossify, where learning languages feels like playtime! With our gamified approach, 
-        bite-sized lessons, and personalized experience, fluency is just a tap away. 
-        Join our community of language enthusiasts and start your adventure today!
+        Welcome to Glossify, where learning languages feels like playtime! With
+        our gamified approach, bite-sized lessons, and personalized experience,
+        fluency is just a tap away. Join our community of language enthusiasts
+        and start your adventure today!
       </div>
-      <Button size="lg" className="mt-5 text-md" asChild>
-        <Link href="/login">
-            Start for Free
-        </Link>
-      </Button>
+      <ClerkLoading>
+        <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />
+      </ClerkLoading>
+      <ClerkLoaded>
+        <SignedOut>
+          <SignUpButton
+            mode="modal"
+            afterSignInUrl="/start"
+            afterSignUpUrl="/start"
+          >
+            <Button size="lg" variant="default" className="items-center rounded-lg text-md mt-5 font-semibold w-[350px]">
+              Start for Free
+            </Button>
+          </SignUpButton>
+        </SignedOut>
+        <SignedIn>
+          <Button size="lg" variant="secondary" className="items-center rounded-lg text-md mt-5 font-semibold w-[350px]" asChild>
+            <Link href="/start">
+              Continue Learning
+            </Link>
+          </Button>
+        </SignedIn>
+      </ClerkLoaded>
     </div>
   );
 };
