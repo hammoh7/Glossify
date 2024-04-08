@@ -21,6 +21,8 @@ model User {
   password      String?
   image         String?
   accounts      Account[]
+
+  userProgress  UserProgress?
 }
 
 model Account {
@@ -46,6 +48,7 @@ model Courses {
   id          String  @id @default(uuid()) @map("_id")
   title       String
   imageSrc    String
+
   userProgress UserProgress[]
 }
 
@@ -53,8 +56,10 @@ model UserProgress {
   userId         String   @id @default(uuid()) @map("_id")
   userName       String
   userImageSrc   String
-  activeCourseId String?
+  activeCourseId String
   hearts         Int
   points         Int
-  activeCourse   Courses?  @relation(fields: [activeCourseId], references: [id])
+
+  activeCourse   Courses  @relation(fields: [activeCourseId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 }
