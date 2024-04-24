@@ -11,6 +11,8 @@
    npm install
    ```
 3. Create a .env file. Copy below things with your appropriate data:
+   <br />
+   I have used MongoDB (for Database), Clerk (for Authentication)
    ```
    DATABASE_URL=""
 
