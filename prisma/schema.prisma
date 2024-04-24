@@ -13,53 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String  @id @default(uuid()) @map("_id")
-  name          String
-  email         String  @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
-  accounts      Account[]
-
-  userProgress  UserProgress?
-}
-
-model Account {
-  id                  String  @id @default(uuid()) @map("_id")
-  userId              String
-  type                String
-  provider            String
-  providerAccountId   String
-  refresh_token       String
-  access_token        String
-  expires_at          Int?
-  token_type          String?
-  scope               String?
-  id_token            String?
-  session_state       String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model Courses {
   id          String  @id @default(uuid()) @map("_id")
   title       String
   imageSrc    String
-
-  userProgress UserProgress[]
-}
-
-model UserProgress {
-  userId         String   @id @default(uuid()) @map("_id")
-  userName       String
-  userImageSrc   String
-  activeCourseId String
-  hearts         Int
-  points         Int
-
-  activeCourse   Courses  @relation(fields: [activeCourseId], references: [id])
-  user           User     @relation(fields: [userId], references: [id])
 }
