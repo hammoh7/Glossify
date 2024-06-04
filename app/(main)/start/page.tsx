@@ -2,8 +2,15 @@ import SidebarWrapper from "@/components/start/sidebar-wrapper";
 import UpdateWrapper from "@/components/start/update-wrapper";
 import Header from "./header";
 import UserProgress from "@/components/start/user-progress";
+import { getUserProgress } from "@/database/queries";
+import { redirect } from "next/navigation";
 
-const StartPage = () => {
+const StartPage = async () => {
+  const userProgressData = getUserProgress();
+  const [userProgress] = await Promise.all([userProgressData]);
+  if (!userProgress || !userProgress.activeCourse) {
+    redirect("/courses");
+  }
   return (
     <div className="flex flex-row-reverse gap-[50px] px-5">
       <SidebarWrapper>
