@@ -14,7 +14,20 @@ datasource db {
 }
 
 model Courses {
-  id          String  @id @default(uuid()) @map("_id")
-  title       String
-  imageSrc    String
+  id              String  @id @default(uuid()) @map("_id")
+  title           String
+  imageSrc        String
+
+  userProgress    UserProgress[]
+}
+
+model UserProgress {
+  userId          String  @id @default(uuid()) @map("_id")
+  userName        String  @default("User")
+  userImageSrc    String  @default("/image.jpeg")
+  activeCourseId  String
+  hearts          Int     @default(5)
+  points          Int     @default(0) 
+
+  activeCourse    Courses @relation(fields: [activeCourseId], references: [id], onDelete: Cascade)
 }
