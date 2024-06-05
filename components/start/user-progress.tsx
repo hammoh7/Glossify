@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Infinity } from "lucide-react";
+import { Courses } from "@prisma/client";
 
 interface UserProgressProps {
-  activeCourse: { title: string; imageSrc: string };
+  activeCourse: Courses;
   lives: number;
   points: number;
   hasActiveSubscription: boolean;
