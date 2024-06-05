@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,11 +8,12 @@ datasource db {
 }
 
 model Courses {
-  id              String  @id @default(uuid()) @map("_id")
+  id              String  @id @default(uuid()) @map("_id") 
   title           String
   imageSrc        String
 
   userProgress    UserProgress[]
+  units           Units[]        
 }
 
 model UserProgress {
@@ -30,4 +25,62 @@ model UserProgress {
   points          Int     @default(0) 
 
   activeCourse    Courses @relation(fields: [activeCourseId], references: [id], onDelete: Cascade)
+}
+
+model Units {
+  id              String  @id @default(uuid()) @map("_id")
+  courseId        String
+  title           String
+  description     String
+  order           Int
+
+  course          Courses  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons         Lessons[]
+}
+
+model Lessons {
+  id              String  @id @default(uuid()) @map("_id")
+  unitId          String
+  title           String
+  order           Int
+
+  units           Units   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  challenges      Challenges[]
+}
+
+model Challenges {
+  id              String  @id @default(uuid()) @map("_id")
+  lessonId        String
+  type            ChallengeType
+  question        String
+  order           Int
+
+  lesson      Lessons      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  challengeOptions ChallengeOption[]
+  challengeProgress ChallengeProgress[]
+}
+
+enum ChallengeType {
+  SELECT
+  ASSIST
+}
+
+model ChallengeOption {
+  id               String  @id @default(uuid()) @map("_id")
+  challengeId      String
+  text             String
+  correct          Boolean
+  imageSrc         String?
+  audioSrc         String?
+
+  challenge        Challenges   @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+}
+
+model ChallengeProgress {
+  id               String   @id @default(uuid()) @map("_id")
+  userId           String
+  challengeId      String
+  completed        Boolean  @default(false)
+
+  challenge        Challenges      @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 }
