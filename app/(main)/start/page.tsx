@@ -15,14 +15,14 @@ const StartPage = async () => {
     <div className="flex flex-row-reverse gap-[50px] px-5">
       <SidebarWrapper>
         <UserProgress
-          activeCourse={{ title: "Japanese", imageSrc: "/images/jap.png" }}
-          lives={10}
-          points={100}
+          activeCourse={userProgress.activeCourse}
+          lives={userProgress.hearts}
+          points={userProgress.points}
           hasActiveSubscription={false}
         />
       </SidebarWrapper>
       <UpdateWrapper>
-        <Header title="Japanese" />
+        <Header title={userProgress.activeCourse.title} />
       </UpdateWrapper>
     </div>
   );
