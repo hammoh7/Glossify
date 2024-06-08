@@ -4,6 +4,7 @@ import Header from "./header";
 import UserProgress from "@/components/start/user-progress";
 import { getUnits, getUserProgress } from "@/database/queries";
 import { redirect } from "next/navigation";
+import Unit from "./units";
 
 const StartPage = async () => {
   const userProgressData = getUserProgress();
@@ -28,7 +29,16 @@ const StartPage = async () => {
         <Header title={userProgress.activeCourse.title} />
         {units.map((unit) => (
           <div key={unit.id} className="mb-10">
-            {JSON.stringify(unit)}
+            <Unit 
+              id={unit.id}
+              title={unit.title}
+              description={unit.description}
+              order={unit.order}
+              lessons={unit.lessons}
+              activeLesson={undefined}
+              lessonProgress={0}
+              challengeProgress={[]}
+            />
           </div>
         ))}
       </UpdateWrapper>
