@@ -41,7 +41,7 @@ export const getUnits = cache(async () => {
   }
   const data = await database.units.findMany({
     where: {
-      courseId: userProgress.activeCourseId, 
+      courseId: userProgress.activeCourseId,
     },
     include: {
       lessons: {
