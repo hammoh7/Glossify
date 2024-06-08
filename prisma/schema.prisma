@@ -44,8 +44,9 @@ model Lessons {
   title           String
   order           Int
 
-  units           Units   @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  challenges      Challenges[]
+  units             Units   @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  challenges        Challenges[]
+  challengeProgress ChallengeProgress[] 
 }
 
 model Challenges {
@@ -55,8 +56,8 @@ model Challenges {
   question        String
   order           Int
 
-  lesson      Lessons      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  challengeOptions ChallengeOption[]
+  lesson            Lessons      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  challengeOptions  ChallengeOption[]
   challengeProgress ChallengeProgress[]
 }
 
@@ -79,8 +80,10 @@ model ChallengeOption {
 model ChallengeProgress {
   id               String   @id @default(uuid()) @map("_id")
   userId           String
+  lessonId         String 
   challengeId      String
   completed        Boolean  @default(false)
 
   challenge        Challenges      @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  lesson           Lessons         @relation(fields: [lessonId], references: [id])
 }
