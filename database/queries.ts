@@ -76,3 +76,16 @@ export const getUnits = cache(async () => {
 
   return normalizedData;
 });
+
+export const getCourseProgress = cache(async () => {
+  const { userId } = await auth();
+  const userProgress = await getUserProgress();
+
+  if (!userId || !userProgress?.activeCourseId) {
+    return null;
+  }
+
+  const unitsInActiveCourse = await database.units.findMany({
+    orderBy: { order: 'asc' },
+  })
+})
