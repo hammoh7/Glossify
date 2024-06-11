@@ -59,6 +59,12 @@ const main = async () => {
           order: 2,
           title: "Alphabets",
         },
+        {
+          id: String(3),
+          unitId: String(1),
+          order: 3,
+          title: "Words",
+        },
       ],
     });
 
