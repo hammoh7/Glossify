@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ChallengeProgress, Lessons, Units } from "@prisma/client";
+import { ChallengeProgress, Lessons } from "@prisma/client";
 import { LucideHandMetal } from "lucide-react";
 import Link from "next/link";
 import LessonButton from "./lesson-button";
@@ -10,9 +10,7 @@ interface UnitProps {
   description: string;
   order: number;
   lessons: Lessons[];
-  activeLesson?: {
-    unit: Units;
-  };
+  activeLesson?: Lessons;
   lessonProgress: number;
   challengeProgress: ChallengeProgress[];
 }
@@ -43,7 +41,7 @@ const Unit = ({
       </header>
       <main className="flex flex-rows items-center justify-center mt-8 space-y-6">
         {lessons.map((lesson, index) => {
-          const isCurrent = lesson.id === activeLesson?.unit.id;
+          const isCurrent = activeLesson?.id === lesson.id;
           const lessonChallengeProgress = challengeProgress
             ? challengeProgress.filter(
                 (progress) => progress.lessonId === lesson.id

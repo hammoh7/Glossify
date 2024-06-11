@@ -2,16 +2,32 @@ import SidebarWrapper from "@/components/start/sidebar-wrapper";
 import UpdateWrapper from "@/components/start/update-wrapper";
 import Header from "./header";
 import UserProgress from "@/components/start/user-progress";
-import { getUnits, getUserProgress } from "@/database/queries";
+import {
+  getCourseProgress,
+  getLessonPercentage,
+  getUnits,
+  getUserProgress,
+} from "@/database/queries";
 import { redirect } from "next/navigation";
 import Unit from "./units";
 
 const StartPage = async () => {
   const userProgressData = getUserProgress();
   const unitsData = getUnits();
-  const [userProgress, units] = await Promise.all([userProgressData, unitsData]);
-  
+  const courseProgressData = getCourseProgress();
+  const lessonPercentageData = getLessonPercentage();
+  const [userProgress, units, courseProgress, lessonPercentage] = await Promise.all([
+    userProgressData,
+    unitsData,
+    courseProgressData,
+    lessonPercentageData
+  ]);
+
   if (!userProgress || !userProgress.activeCourse) {
+    redirect("/courses");
+  }
+
+  if (!courseProgress) {
     redirect("/courses");
   }
 
@@ -29,14 +45,14 @@ const StartPage = async () => {
         <Header title={userProgress.activeCourse.title} />
         {units.map((unit) => (
           <div key={unit.id} className="mb-10">
-            <Unit 
+            <Unit
               id={unit.id}
               title={unit.title}
               description={unit.description}
               order={unit.order}
               lessons={unit.lessons}
-              activeLesson={undefined}
-              lessonProgress={0}
+              activeLesson={courseProgress.activeLesson}
+              lessonProgress={lessonPercentage}
               challengeProgress={[]}
             />
           </div>
